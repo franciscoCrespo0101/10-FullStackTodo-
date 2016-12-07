@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="" ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title Page</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+
+<body>
+    <h1 class="text-center">Simple To Do</h1>
+    <div class="container" ng-controller="PostController as postCtrl">
+        <div class="col-sm-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add Item</h3>
+                </div>
+                <div class="panel-body">
+                    <textarea name="" placeholder="Type item here please" ng-model="postCtrl.newPost.entry" cols="6" rows="2" class="form-control"></textarea>
+                    <form>
+                        <div class="form-group">
+                            <label for="sev">Please Select Item Priority:</label>
+                            <select class="form-control" ng-model="postCtrl.newPost.severity">
+                                <option value="3">Low</option>
+                                <option value="2">Medium</option>
+                                <option value="1">High</option>
+                            </select>
+                        </div>
+                    </form>
+                    <div class="footer clearfix">
+                        <button class="btn btn-primary pull-right" ng-click="postCtrl.addPost()">Add Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary" ng-click="postCtrl.orderBy='severity'">Highest</button>
+                <button type="button" class="btn btn-primary" ng-click="postCtrl.orderBy='-severity'">Lowest</button>
+                <button type="button" class="btn btn-primary" ng-click="postCtrl.orderBy='entry'">Alphabetic</button>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item clearfix" ng-repeat="post in postCtrl.posts | orderBy :postCtrl.orderBy" ng-class="postCtrl.getClass(post)"><span ng-hide="editing">
+               {{post.entry}}
+               </span>
+                    <input ng-show="editing" ng-model="post.entry">
+                    <button class="btn btn-xs btn-danger pull-right" ng-click="postCtrl.deletePost(post)">x</button>
+                    <button class="btn btn-xs btn-info pull-right" ng-hide="editing" ng-click="editing=!editing">Edit</button>
+                    <button class="btn btn-xs btn-info pull-right" ng-show="editing" ng-click="postCtrl.edit(post); editing=!editing">Save</button>
+            </ul>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="//code.jquery.com/jquery.js "></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js " integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS " crossorigin="anonymous "></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="app/app.module.js"></script>
+    <script src="app/todo.factory.js"></script>
+    <script src="app/home/home.controller.js"></script>
+</body>
+
+</html>
